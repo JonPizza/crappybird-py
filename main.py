@@ -10,8 +10,8 @@ class Birdie:
         self.downward_accl = downward_accl  # downward acceleration
 
     def flap(self):
-        self.y -= 3
-        self.downward_accl = -1
+        self.y -= 1
+        self.downward_accl = -2
 
     def update(self, counter):
         if counter % 2 == 0:
