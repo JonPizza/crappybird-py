@@ -29,7 +29,7 @@ class Pipe:
         if opening:
             self.opening = opening
         else:
-            self.opening = random.randint(3, 14)
+            self.opening = random.randint(2, 13)
         self.x = x
 
     def update(self):
@@ -48,7 +48,7 @@ class Pipe:
                 locations.append([i, self.x])
 
         return [karl.y, 20] in locations
-    
+
     def karl_passing(self, karl: Birdie):
         locations = []
         for i in range(24):
@@ -63,15 +63,19 @@ def main(stdscr):
     pipes = []
     counter = 0
     points = 0
+
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLUE)
     curses.init_pair(2, curses.COLOR_YELLOW, curses.COLOR_RED)
     curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+    curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_YELLOW)
+
     stdscr.bkgd(' ', curses.color_pair(1) | curses.A_BOLD)
+
     stdscr.nodelay(True)
     curses.curs_set(0)
 
     while True:
-        if points == 25:
+        if points == 35:
             # change to HELL MODE
             curses.init_pair(1, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
             curses.init_pair(2, curses.COLOR_RED, curses.COLOR_YELLOW)
@@ -79,17 +83,13 @@ def main(stdscr):
 
         stdscr.erase()
 
-        if points >= 25:
-            stdscr.addstr(0, 69, '>HELL MODE<', curses.color_pair(3))
-            stdscr.addstr(1, 72, 'x2 PIPES', curses.color_pair(3))
-
         k = stdscr.getch()
         if k == ord(' '):
             karl.flap()
         karl.update(counter)
 
-        try: # throws error if karl is outside of stdscr
-            karl.draw(stdscr) 
+        try:  # throws error if karl is outside of stdscr
+            karl.draw(stdscr)
         except:
             return points
 
@@ -104,10 +104,12 @@ def main(stdscr):
             else:
                 del pipe
 
-        if counter % (40 if points <= 25 else 25) == 0:
+        if counter % 40 == 0:
             pipes.append(Pipe())
 
         stdscr.addstr(0, 0, f'Points: {points}', curses.color_pair(3))
+        stdscr.addstr(23, 0, '█'*79, curses.color_pair(4))
+
         stdscr.refresh()
         counter += 1
         time.sleep(0.04)
@@ -126,9 +128,9 @@ def death_message(points):
         print('You must be a hacker.')
 
 
-if __name__ == '__main__':    
+if __name__ == '__main__':
     points = wrapper(main)
     print(f'Points: {points}')
     death_message(points)
-    
+
 # https://jon.network
