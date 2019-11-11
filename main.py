@@ -110,7 +110,7 @@ def death_message(points):
     elif points < 10:
         print('That\'s all you got!?')
     elif points < 30:
-        print('Your getting a little better...')
+        print('You\'re getting a little better...')
     elif points < 50:
         print('Wowza! That\'s pretty darn good!')
     else:
