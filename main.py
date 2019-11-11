@@ -76,7 +76,17 @@ def main(stdscr):
     curses.curs_set(0)
 
     while True:
+        if points == 25:
+            # change to HELL MODE
+            curses.init_pair(1, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
+            curses.init_pair(2, curses.COLOR_RED, curses.COLOR_YELLOW)
+            curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+
         stdscr.erase()
+
+        if points >= 25:
+            stdscr.addstr(0, 69, '>HELL MODE<', curses.color_pair(3))
+            stdscr.addstr(1, 72, 'x2 PIPES', curses.color_pair(3))
 
         k = stdscr.getch()
         if k == ord(' '):
@@ -99,7 +109,7 @@ def main(stdscr):
             else:
                 del pipe
 
-        if counter % 40 == 0:
+        if counter % (40 if points <= 25 else 25) == 0:
             pipes.append(Pipe())
 
         stdscr.addstr(0, 0, f'Points: {points}', curses.color_pair(3))
@@ -126,3 +136,4 @@ if __name__ == '__main__':
     print(f'Points: {points}')
     death_message(points)
     
+# https://jon.network
