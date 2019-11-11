@@ -82,7 +82,11 @@ def main(stdscr):
         if k == ord(' '):
             karl.flap()
         karl.update(counter)
-        karl.draw(stdscr)
+
+        try: # throws error if karl is outside of stdscr
+            karl.draw(stdscr) 
+        except:
+            return points
 
         for pipe in pipes:
             if pipe.x >= 0:
@@ -117,7 +121,7 @@ def death_message(points):
         print('You must be a hacker.')
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':    
     points = wrapper(main)
     print(f'Points: {points}')
     death_message(points)
