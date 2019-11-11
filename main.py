@@ -58,11 +58,6 @@ class Pipe:
         return [karl.y, 20] in locations
 
 
-def log(s):
-    with open('log.txt', 'a') as l:
-        l.write(str(s) + '\n')
-
-
 def main(stdscr):
     karl = Birdie()
     pipes = []
